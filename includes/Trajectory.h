@@ -18,9 +18,6 @@ using namespace std;
 class TrajectoryPlanner{
     
     public:
-        TrajectoryPlanner(double dt);
-        MatrixXd cubicPoly(double* way_pts, double* vel_pts, double* time_pts, const int pts_count);
-        double* cubicCoefs(double theta_ini, double theta_f, double theta_dot_ini, double theta_dot_f, double tf);
-    protected:
-        double dt_;
+        vector<Vector3d> cubicPoly(vector<Vector3d>& way_pts,vector<Vector3d>& vel_pts, double* time_pts, double dt);
+        vector<Vector3d> cubicCoefs(Vector3d theta_ini, Vector3d theta_f, Vector3d theta_dot_ini, Vector3d theta_dot_f, double tf);
 };
