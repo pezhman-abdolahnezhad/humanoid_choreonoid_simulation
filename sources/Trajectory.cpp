@@ -18,7 +18,7 @@ vector<Vector3d> TrajectoryPlanner::cubicCoefs(Vector3d theta_ini, Vector3d thet
              if(i>=(time_pts[j]*1/dt) && i<(time_pts[j+1]*1/dt)){
                  double final_time = time_pts[j+1] - time_pts[j];
                  vector<Vector3d> coef = this->cubicCoefs(way_pts[j], way_pts[j+1], vel_pts[j], vel_pts[j+1], final_time);
-                 q[i] = coef[0] + coef[1]*i*dt + coef[2]*pow(i*dt,2) + coef[3]*pow(i*dt,3);
+                 q[i] = coef[0] + coef[1]*(i-time_pts[j]*1/dt)*dt + coef[2]*pow((i-time_pts[j]*1/dt)*dt,2) + coef[3]*pow((i-time_pts[j]*1/dt)*dt,3);
                  //qd[i] = coef[1] + 2*coef[2]*i*dt + 3*coef[3]*pow(i*dt,2);
                  //qdd[i] = 2*coef[2] + 6*coef[3]*i*dt;
              }

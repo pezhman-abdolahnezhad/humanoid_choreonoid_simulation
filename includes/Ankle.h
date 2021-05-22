@@ -19,13 +19,27 @@ using namespace std;
 
 class AnklePlanner : public TrajectoryPlanner{
     public:
-        AnklePlanner(Vector3d* initFP, Vector3d* finFP, double* initT, double* finT, double swingHeight, int swingCount, double dt);
-        MatrixXd* getSwing();
+        AnklePlanner(vector<Vector3d> rF, double dt, double tStep, double tDS, double alpha, double swingHeight);
+        void phaseDetect();
+        void setDSTraj();
+        void setSSTraj();
+        void write2File(vector<Vector3d> input ,string file_name);
+
+
     private:
-        Vector3d* initFP_;   // swing foots initial points
-        Vector3d* finFP_;    // swing foots final points
-        double* initT_;      // initial times for swing
-        double* finT_;       // final times for swing
-        int swingCount_;
+        vector<Vector3d> rF_;
+        double dt_;
+        double tStep_;
+        double tDS_;
+        double alpha_;
         double swingHeight_;
+        int footCount_;
+
+        vector <Vector3d> q1_;
+        vector <Vector3d> q2_;
+
+        vector <double> InitDSt_;
+        vector <double> EndDSt_;
+        vector <double> InitSSt_;
+        vector <double> EndSSt_;
 };
