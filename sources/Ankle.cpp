@@ -83,20 +83,27 @@ void AnklePlanner::write2File(vector<Vector3d> input ,string file_name="data"){
     }
     output_file.close();
 }
-int main(){
-    vector<Vector3d> v1(9);
-    v1[0] << 0.0, 0.12, 0.0;
-    v1[1] << 0.0, -0.12, 0.0;
-    v1[2] << 0.5, 0.12, 0.0;
-    v1[3] << 1.0, -0.12, 0.0;
-    v1[4] << 1.5, 0.12, 0.0;
-    v1[5] << 2.0, -0.12, 0.0;
-    v1[6] << 2.5, 0.12, 0.0;
-    v1[7] << 3.0, -0.12, 0.0;
-    v1[8] << 3.0, 0.12, 0.0;
-    AnklePlanner d2(v1, 0.01, 0.8, 0.3, 0.3, 0.1);
-    d2.phaseDetect();
-    d2.setDSTraj();
-    d2.setSSTraj();
-    return 0;
+vector <vector<Vector3d>> AnklePlanner::getAnkles(){
+    this->phaseDetect();
+    this->setDSTraj();
+    this->setSSTraj();
+    vector <vector<Vector3d>> tot_q = {q1_, q2_};
+    return tot_q;
 }
+// int main(){
+//     vector<Vector3d> v1(9);
+//     v1[0] << 0.0, 0.12, 0.0;
+//     v1[1] << 0.0, -0.12, 0.0;
+//     v1[2] << 0.5, 0.12, 0.0;
+//     v1[3] << 1.0, -0.12, 0.0;
+//     v1[4] << 1.5, 0.12, 0.0;
+//     v1[5] << 2.0, -0.12, 0.0;
+//     v1[6] << 2.5, 0.12, 0.0;
+//     v1[7] << 3.0, -0.12, 0.0;
+//     v1[8] << 3.0, 0.12, 0.0;
+//     AnklePlanner d2(v1, 0.01, 0.8, 0.3, 0.3, 0.1);
+//     d2.phaseDetect();
+//     d2.setDSTraj();
+//     d2.setSSTraj();
+//     return 0;
+// }

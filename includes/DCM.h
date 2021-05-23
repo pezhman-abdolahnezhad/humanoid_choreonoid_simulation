@@ -30,6 +30,7 @@ class DCMPlanner : public TrajectoryPlanner{
         void mergeXi();
         void write2File(vector<Vector3d> input ,string file_name);
         void setCOM();
+        vector<Vector3d> getCOM();
 
     private:
         vector<Vector3d> rF_;
@@ -40,7 +41,6 @@ class DCMPlanner : public TrajectoryPlanner{
         vector<Vector3d> InitXiDDS_;
         vector<Vector3d> EndXiDS_;
         vector<Vector3d> EndXiDDS_;
-        vector<vector<Vector3d>> XiDS_;
         vector<Vector3d> Xi_;
         vector<Vector3d> COM_;
         vector<Vector3d> COMD_; //COM Velocity

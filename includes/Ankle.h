@@ -24,6 +24,7 @@ class AnklePlanner : public TrajectoryPlanner{
         void setDSTraj();
         void setSSTraj();
         void write2File(vector<Vector3d> input ,string file_name);
+        vector <vector<Vector3d>> getAnkles();
 
 
     private:

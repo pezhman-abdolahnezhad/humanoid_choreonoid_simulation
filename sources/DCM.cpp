@@ -55,19 +55,6 @@ void DCMPlanner::findDSBC(){
     }
 }
 
-/*
-void DCMPlanner::setXiDS(){
-    XiDS_.resize(footCount_-2);
-    //int length = (1/dt_)*tStep_*(footCount_-2);
-    for(int i=0; i<footCount_-2; i++){
-        vector<Vector3d> way_pts = {InitXiDS_[i], EndXiDS_[i]};
-        vector<Vector3d> vel_pts = {InitXiDDS_[i], EndXiDDS_[i]};
-        double time_pts[] = {0, tDS_};
-        XiDS_[i] = TrajectoryPlanner::cubicPoly(way_pts, vel_pts, time_pts, dt_);
-    }
-}
-*/
-
 void DCMPlanner::phaseDetect(){
     InitDSt_.resize(footCount_-2);
     EndDSt_.resize(footCount_-2);
@@ -131,24 +118,35 @@ void DCMPlanner::setCOM(){
     this->write2File(COM_ ,"COM");
 }
 
-int main(){
-    vector<Vector3d> v1(9);
-    v1[0] << 0.0, 0.12, 0.0;
-    v1[1] << 0.0, -0.12, 0.0;
-    v1[2] << 0.5, 0.12, 0.0;
-    v1[3] << 1.0, -0.12, 0.0;
-    v1[4] << 1.5, 0.12, 0.0;
-    v1[5] << 2.0, -0.12, 0.0;
-    v1[6] << 2.5, 0.12, 0.0;
-    v1[7] << 3.0, -0.12, 0.0;
-    v1[8] << 3.0, 0.12, 0.0;
-    DCMPlanner d1(v1, 0.01, 0.8, 0.3, 0.3, 0.68);
-    d1.setRVRP();
-    d1.setXiEOS();
-    d1.setInitXi();
-    d1.findDSBC();
-    d1.phaseDetect();
-    d1.mergeXi();
-    d1.setCOM();
-    return 0;
+vector<Vector3d> DCMPlanner::getCOM(){
+    this->setRVRP();
+    this->setXiEOS();
+    this->setInitXi();
+    this->findDSBC();
+    this->phaseDetect();
+    this->mergeXi();
+    this->setCOM();
+    return COM_;
 }
+
+// int main(){
+//     vector<Vector3d> v1(9);
+//     v1[0] << 0.0, 0.12, 0.0;
+//     v1[1] << 0.0, -0.12, 0.0;
+//     v1[2] << 0.5, 0.12, 0.0;
+//     v1[3] << 1.0, -0.12, 0.0;
+//     v1[4] << 1.5, 0.12, 0.0;
+//     v1[5] << 2.0, -0.12, 0.0;
+//     v1[6] << 2.5, 0.12, 0.0;
+//     v1[7] << 3.0, -0.12, 0.0;
+//     v1[8] << 3.0, 0.12, 0.0;
+//     DCMPlanner d1(v1, 0.01, 0.8, 0.3, 0.3, 0.68);
+//     d1.setRVRP();
+//     d1.setXiEOS();
+//     d1.setInitXi();
+//     d1.findDSBC();
+//     d1.phaseDetect();
+//     d1.mergeXi();
+//     d1.setCOM();
+//     return 0;
+// }
