@@ -1,5 +1,5 @@
-#include "../includes/Ankle.h"
-
+//#include "../includes/Ankle.h"
+#include "Ankle.h"
 AnklePlanner::AnklePlanner(vector<Vector3d> rF, double dt, double tStep, double tDS, double alpha, double swingHeight){
     rF_ = rF;
     dt_ = dt;

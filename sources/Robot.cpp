@@ -11,8 +11,7 @@ Robot::Robot(vector<Vector3d> rF, double dt, double tStep, double tDS, double al
     D_ = D;
     A_ = A;
     B_ = B;
-
-    if(rF_[2](2)>0) isLeft_ = true;
+    if(rF_[2](1)>0) isLeft_ = true;
     else isLeft_ = false;
 }
 
@@ -61,7 +60,7 @@ vector<double> Robot::geometricalIK(Vector3d rel_ankle, double D){
     if (c5>=1) {
         q5=0;
         // cout<<"c5 is larger than 1"<<A<<","<<B<<","<<C<<","<<D<<","<<E<<"\n";
-        cout<<"c5="<<c5<<"\n";
+        //cout<<"c5="<<c5<<"\n";
     }else if (c5<=-1){
         q5=M_PI;
     }else{
@@ -86,7 +85,7 @@ vector<double> Robot::geometricalIK(Vector3d rel_ankle, double D){
     double sz=sin(q2);
     q3=atan2(R(2,1),-1*R(0,1)*sz+R(1,1)*cz);
     q4=atan2(-1*R(2,0),R(2,2));
-    vector<double> q = {q2,q3,q4,q5,q6,q7};
+    vector<double> q = {q3,q4,q2,q5,q6,q7};
     return q;  
 }
 void Robot::calcJntAng(){
@@ -94,9 +93,9 @@ void Robot::calcJntAng(){
     RJangles_.resize(COM_.size());
     LJangles_.resize(COM_.size());
     for(int i=0; i<COM_.size(); i++){
-        rel_pos = COM_[i] - LFoot_[i];
+        rel_pos = -(COM_[i] - LFoot_[i]);
         LJangles_[i] = this->geometricalIK(rel_pos, D_);
-        rel_pos = COM_[i] - RFoot_[i];
+        rel_pos = -(COM_[i] - RFoot_[i]);
         RJangles_[i] = this->geometricalIK(rel_pos, -D_);
     }
     this->write2File (LJangles_, "LJangles");
@@ -112,6 +111,13 @@ void Robot::write2File(vector<vector<double>> input ,string file_name="data"){
         output_file << "\n";
     }
     output_file.close();
+}
+
+vector<vector<vector<double>>> Robot::getJntAng(){
+    this->getTrajs();
+    this->calcJntAng();
+    vector<vector<vector<double>>> jnt_angs = {RJangles_, LJangles_};
+    return jnt_angs;
 }
 //  int main(){
 //     vector<Vector3d> v1(9);

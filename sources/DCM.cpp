@@ -1,5 +1,5 @@
 #include "../includes/DCM.h"
-
+//#include "DCM.h"
 DCMPlanner::DCMPlanner(vector<Vector3d> rF, double dt, double tStep, double tDS, double alpha, double deltaZ){
     rF_ = rF;
     tStep_ = tStep;
@@ -49,7 +49,7 @@ void DCMPlanner::findDSBC(){
         }else{
             InitXiDS_[i] = rVRP_[i-1] + exp(-sqrt(G / deltaZ_)*(tDS_)*(alpha_))*(XiEOS_[i-1] - rVRP_[i-1]);
             EndXiDS_[i] = rVRP_[i] + exp(sqrt(G / deltaZ_)*(tDS_)*(1-alpha_))*(XiEOS_[i-1] - rVRP_[i]);
-            InitXiDDS_[i] = (InitXiDS_[i] - rVRP_[i-1])*sqrt(G / deltaZ_);
+            InitXiDDS_[i] = (InitXiDS_[i] - rVRP_[i-1])*sqrt(G / deltaZ_);  //rVRP_[i-1]??? 
             EndXiDDS_[i] = (EndXiDS_[i] - rVRP_[i])*sqrt(G / deltaZ_);
         }
     }
@@ -129,24 +129,24 @@ vector<Vector3d> DCMPlanner::getCOM(){
     return COM_;
 }
 
-// int main(){
-//     vector<Vector3d> v1(9);
-//     v1[0] << 0.0, 0.12, 0.0;
-//     v1[1] << 0.0, -0.12, 0.0;
-//     v1[2] << 0.5, 0.12, 0.0;
-//     v1[3] << 1.0, -0.12, 0.0;
-//     v1[4] << 1.5, 0.12, 0.0;
-//     v1[5] << 2.0, -0.12, 0.0;
-//     v1[6] << 2.5, 0.12, 0.0;
-//     v1[7] << 3.0, -0.12, 0.0;
-//     v1[8] << 3.0, 0.12, 0.0;
-//     DCMPlanner d1(v1, 0.01, 0.8, 0.3, 0.3, 0.68);
-//     d1.setRVRP();
-//     d1.setXiEOS();
-//     d1.setInitXi();
-//     d1.findDSBC();
-//     d1.phaseDetect();
-//     d1.mergeXi();
-//     d1.setCOM();
-//     return 0;
-// }
+int main(){
+    vector<Vector3d> v1(9);
+    v1[0] << 0.0, 0.12, 0.0;
+    v1[1] << 0.0, -0.12, 0.0;
+    v1[2] << 0.5, 0.12, 0.0;
+    v1[3] << 1.0, -0.12, 0.0;
+    v1[4] << 1.5, 0.12, 0.0;
+    v1[5] << 2.0, -0.12, 0.0;
+    v1[6] << 2.5, 0.12, 0.0;
+    v1[7] << 3.0, -0.12, 0.0;
+    v1[8] << 3.0, 0.12, 0.0;
+    DCMPlanner d1(v1, 0.01, 0.8, 0.3, 0.3, 0.68);
+    d1.setRVRP();
+    d1.setXiEOS();
+    d1.setInitXi();
+    d1.findDSBC();
+    d1.phaseDetect();
+    d1.mergeXi();
+    d1.setCOM();
+    return 0;
+}

@@ -27,10 +27,7 @@ class Robot{
         MatrixXd RRoll(double phi);
         void calcJntAng();    // calculation of joint angles
         void write2File(vector<vector<double>> input ,string file_name);
-
-
-    
-    
+        vector<vector<vector<double>>> getJntAng();
     
     private:
         vector<Vector3d> rF_;
